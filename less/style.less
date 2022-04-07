@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;700&display=swap');
+
+@color-desaturatedCyan: hsl(180, 29%, 50%);
+@color-lightGrayisCyanBg: hsl(180, 52%, 96%);
+@color-lightGrayishCyanFilter: hsl(180, 52%, 96%);
+@color-darkGrayishCyan: hsl(180, 8%, 52%);
+@color-veryDarkGrayishCyan: hsl(180, 14%, 20%);
+@mainFont: 'Spartan', sans-serif;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: @color-lightGrayisCyanBg;
+    font-family: @mainFont;
+    font-size: 15px;
+}
+
+header {
+    background-color: @color-desaturatedCyan;
+    display: flex;
+    img {
+        object-fit: cover;
+        width: 100%;
+        height: auto;
+    }
+}
+
+.container {
+    margin: auto;
+    padding: 5rem 2rem;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: @color-veryDarkGrayishCyan;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+}
+
+.job-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    border-left: 5px solid @color-desaturatedCyan;
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+
+.job-card-top {
+    img {
+        position: absolute;
+        top: -25px;
+        height: 50px;
+        width: 50px;
+    }
+
+    .tags {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+        div {
+            margin-left: 0.5rem;
+            &:first-of-type {
+                margin-left: 0;
+            }
+        }
+        .company-name {
+            color: @color-desaturatedCyan;
+            font-weight: 700;
+        }
+        .pill {
+            background-color: @color-desaturatedCyan;
+            color: #fff;
+            border-radius: 30px;
+            padding: 0.25rem 0.5rem;
+            padding-top: 0.5rem;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    }
+
+    .job-title {
+        color: @color-veryDarkGrayishCyan;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .job-details {
+        display: flex;
+        color: @color-darkGrayishCyan;
+        margin-bottom: 1rem;
+        .job-detail {
+            position: relative;
+            padding-left: 30px;
+            &::before {
+                content: '';
+                position: absolute;
+                top: 5px;
+                left: 12px;
+                width: 5px;
+                height: 5px;
+                background-color: @color-darkGrayishCyan;
+                border-radius: 50%;
+            }
+            &:first-of-type {
+                padding-left: 0;
+                &::before {
+                    display: none;
+                }
+            }
+
+        }
+    }
+    .spacer-line {
+        width: 100%;
+        height: 1px;
+        background-color: @color-darkGrayishCyan;
+        margin: 1rem 0;
+    }
+
+}
+
+.skill-pill {
+    position: relative;
+    display: inline-flex;
+    color: @color-desaturatedCyan;
+    background-color: @color-lightGrayisCyanBg;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-left: 0.5rem;
+    font-weight: 700;
+    transition: background-color .3s ease-in-out;
+    &:first-of-type {
+        margin-left: 0;
+    }
+    &:hover {
+        background-color: darken(@color-lightGrayisCyanBg, 20%);        
+    }
+    &.active {
+        background-color: @color-veryDarkGrayishCyan;    
+        color: #fff;    
+    }
+}
+
+.filters-mobile {
+    display: grid;
+    place-content: center;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    background-color: @color-desaturatedCyan;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    padding: 2rem;
+    &:hover {
+        background-color: darken(@color-desaturatedCyan, 5%);
+    }
+    .filters-mobile-container {
+        margin-top: 1rem;
+        .filter-mobile-btns {
+            margin-bottom: 1rem;
+        }
+    }
+    .close-btn {
+        display: none;
+    }
+    &.active {
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            display: block;
+        }
+    }
+}
