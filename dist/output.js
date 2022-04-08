@@ -26,6 +26,7 @@ var getData = function getData() {
     availableFilters = removeDuplicateFilters(tempFilters);
     console.log(data);
     displayJobs(data);
+    initializeSkillBtns();
   });
 };
 
@@ -92,17 +93,17 @@ var filtersBtnEvent = function filtersBtnEvent() {
   }
 
   if (target.classList.contains('js-apply-filters')) {
-    var activeFilters = [];
+    var _activeFilters = [];
     var activeSkillPills = document.querySelectorAll('.skill-pill.active');
     var filteredData = [];
     activeSkillPills.forEach(function (pill) {
-      activeFilters.push(pill.innerText);
+      _activeFilters.push(pill.innerText);
     });
 
-    if (activeFilters.length > 0) {
+    if (_activeFilters.length > 0) {
       var filterData = function filterData() {
         data.forEach(function (element) {
-          if (activeFilters.every(function (language) {
+          if (_activeFilters.every(function (language) {
             return element.languages.includes(language);
           })) {
             filteredData.push(element);
@@ -121,3 +122,36 @@ var filtersBtnEvent = function filtersBtnEvent() {
     target.closest('.js-filters-mobile-btn').classList.remove("active");
   }
 };
+
+var activeFilters = [];
+
+var initializeSkillBtns = function initializeSkillBtns() {
+  var skillPillBtns = document.querySelectorAll('.required-skills .skill-pill');
+  skillPillBtns.forEach(function (skill) {
+    skill.addEventListener('click', function () {
+      return addFilters(skill.innerText);
+    });
+  });
+};
+
+var addFilters = function addFilters(skill) {
+  var selectedFiltersContainer = document.querySelector('.selected-filters');
+  var div = document.createElement('div');
+  div.classList.add('skill-pill');
+  div.innerHTML = "\n            <div class=\"skill\">".concat(skill, "</div> \n            <div class=\"skill-pill-remove-btn\">X</div>\n        ");
+  !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
+  !activeFilters.includes(skill) && activeFilters.push(skill);
+};
+
+var removeBtn = document.querySelector('.skill-pill-remove-btn');
+removeBtn.addEventListener('click', function () {
+  var target = event.target;
+  var skillPill = target.closest('.skill-pill');
+  var skill = target.previousElementSibling.innerText;
+  activeFilters.map(function (filter, index) {
+    if (filter === skill) {
+      activeFilters.splice(index, 1);
+    }
+  });
+  skillPill.remove();
+});

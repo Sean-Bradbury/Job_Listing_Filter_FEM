@@ -22,6 +22,7 @@ const getData =  () => {
             availableFilters = removeDuplicateFilters(tempFilters);
             console.log(data);
             displayJobs(data);
+            initializeSkillBtns();
     });
 };
 
@@ -151,3 +152,48 @@ const filtersBtnEvent = () => {
         target.closest('.js-filters-mobile-btn').classList.remove("active");
     }
 };
+
+const activeFilters = [];
+
+const initializeSkillBtns = () => {
+    const skillPillBtns = document.querySelectorAll('.required-skills .skill-pill');
+    
+    skillPillBtns.forEach(skill => {
+        skill.addEventListener('click', () => addFilters(skill.innerText));
+    });
+};
+
+const addFilters = (skill) => {
+    const selectedFiltersContainer = document.querySelector('.selected-filters');
+
+    const div = document.createElement('div');
+
+    div.classList.add('skill-pill');
+
+    div.innerHTML = 
+        `
+            <div class="skill">${skill}</div> 
+            <div class="skill-pill-remove-btn">X</div>
+        `;
+
+    
+    !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
+
+    !activeFilters.includes(skill) && activeFilters.push(skill);
+};
+
+const removeBtn = document.querySelector('.skill-pill-remove-btn');
+
+removeBtn.addEventListener('click', () => {
+    const target = event.target;
+    const skillPill = target.closest('.skill-pill');
+    const skill = target.previousElementSibling.innerText;
+
+    activeFilters.map((filter, index) => {
+        if(filter === skill){
+            activeFilters.splice(index, 1);
+        }
+    });
+
+    skillPill.remove();
+});

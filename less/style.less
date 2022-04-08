@@ -20,6 +20,7 @@ body {
 }
 
 header {
+    position: relative;
     background-color: @color-desaturatedCyan;
     display: flex;
     img {
@@ -149,6 +150,37 @@ header {
     &.active {
         background-color: @color-veryDarkGrayishCyan;    
         color: #fff;    
+    }
+}
+
+.filter-bar {
+     position: absolute;
+     bottom: -25px;
+     left: 2rem;
+     height: 50px;
+     width: calc(100% - 4rem);
+     &.job-card {
+         margin: 0;
+         flex-direction: row;
+         align-items: center;
+         justify-content: space-between;
+         .filter-clear-btn {
+             color: @color-desaturatedCyan;
+             &:hover {
+                 text-decoration: underline;
+                 cursor: pointer;
+             }
+         }
+     }
+}
+
+.filter-bar {
+    .selected-filters {
+        .skill-pill {
+            &:hover {
+                background-color: darken(@color-lightGrayisCyanBg, 20%);
+            }
+        }
     }
 }
 

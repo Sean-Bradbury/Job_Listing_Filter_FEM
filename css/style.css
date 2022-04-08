@@ -30,6 +30,7 @@ body {
   font-size: 15px;
 }
 header {
+  position: relative;
   background-color: hsl(180, 29%, 50%);
   display: flex;
 }
@@ -148,6 +149,29 @@ header img {
 .skill-pill.active {
   background-color: hsl(180, 14%, 20%);
   color: #fff;
+}
+.filter-bar {
+  position: absolute;
+  bottom: -25px;
+  left: 2rem;
+  height: 50px;
+  width: calc(100% - 4rem);
+}
+.filter-bar.job-card {
+  margin: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter-bar.job-card .filter-clear-btn {
+  color: hsl(180, 29%, 50%);
+}
+.filter-bar.job-card .filter-clear-btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.filter-bar .selected-filters .skill-pill:hover {
+  background-color: hsl(180, 52%, 76%);
 }
 .filters-mobile {
   display: grid;
