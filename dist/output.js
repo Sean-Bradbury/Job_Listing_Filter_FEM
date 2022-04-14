@@ -138,7 +138,7 @@ var addFilters = function addFilters(skill) {
   var selectedFiltersContainer = document.querySelector('.selected-filters');
   var div = document.createElement('div');
   div.classList.add('skill-pill');
-  div.innerHTML = "\n            <div class=\"skill\">".concat(skill, "</div> \n            <div class=\"skill-pill-remove-btn\" onClick=\"removeSkill()\">X</div>\n        ");
+  div.innerHTML = "\n            <div class=\"skill\">".concat(skill, "</div> \n            <img class=\"skill-pill-remove-btn\" onClick=\"removeSkill()\" src=\"/images/icon-remove.svg\" alt=\"cross\" title=\"remove skill\" />\n        ");
   !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
   !activeFilters.includes(skill) && activeFilters.push(skill);
 };

@@ -180,7 +180,7 @@ header img {
   justify-content: space-between;
 }
 .filter-bar .selected-filters .skill-pill:hover {
-  background-color: hsl(180, 52%, 76%);
+  background-color: hsl(180, 52%, 96%);
 }
 .filter-bar .selected-filters .skill-pill .skill {
   padding: 0.5rem;
@@ -192,6 +192,9 @@ header img {
   background-color: hsl(180, 29%, 50%);
   color: #fff;
   cursor: pointer;
+}
+.filter-bar .selected-filters .skill-pill .skill-pill-remove-btn:hover {
+  background-color: hsl(180, 14%, 20%);
 }
 .filters-mobile {
   display: grid;

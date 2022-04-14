@@ -173,7 +173,7 @@ const addFilters = (skill) => {
     div.innerHTML = 
         `
             <div class="skill">${skill}</div> 
-            <div class="skill-pill-remove-btn" onClick="removeSkill()">X</div>
+            <img class="skill-pill-remove-btn" onClick="removeSkill()" src="/images/icon-remove.svg" alt="cross" title="remove skill" />
         `;
 
     
