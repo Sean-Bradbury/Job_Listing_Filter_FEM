@@ -138,13 +138,12 @@ var addFilters = function addFilters(skill) {
   var selectedFiltersContainer = document.querySelector('.selected-filters');
   var div = document.createElement('div');
   div.classList.add('skill-pill');
-  div.innerHTML = "\n            <div class=\"skill\">".concat(skill, "</div> \n            <div class=\"skill-pill-remove-btn\">X</div>\n        ");
+  div.innerHTML = "\n            <div class=\"skill\">".concat(skill, "</div> \n            <div class=\"skill-pill-remove-btn\" onClick=\"removeSkill()\">X</div>\n        ");
   !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
   !activeFilters.includes(skill) && activeFilters.push(skill);
 };
 
-var removeBtn = document.querySelector('.skill-pill-remove-btn');
-removeBtn.addEventListener('click', function () {
+function removeSkill() {
   var target = event.target;
   var skillPill = target.closest('.skill-pill');
   var skill = target.previousElementSibling.innerText;
@@ -154,4 +153,6 @@ removeBtn.addEventListener('click', function () {
     }
   });
   skillPill.remove();
-});
+}
+
+;

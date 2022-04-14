@@ -153,6 +153,12 @@ header {
     }
 }
 
+.required-skills {
+    .skill-pill {
+        cursor: pointer;
+    }
+}
+
 .filter-bar {
      position: absolute;
      bottom: -25px;
@@ -177,9 +183,24 @@ header {
 .filter-bar {
     .selected-filters {
         .skill-pill {
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
             &:hover {
                 background-color: darken(@color-lightGrayisCyanBg, 20%);
             }
+            .skill {
+                padding: 0.5rem;
+            }
+            .skill-pill-remove-btn {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                padding: 0.5rem;
+                background-color: @color-desaturatedCyan;
+                color: #fff;
+                cursor: pointer;
+            }        
         }
     }
 }

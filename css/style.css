@@ -3,21 +3,21 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/spartan/v11/l7gAbjR61M69yt8Z8w6FZf9WoBxdBrG3uW6O.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/spartan/v12/l7gAbjR61M69yt8Z8w6FZf9WoBxdBrG3uW6O.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Spartan';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/spartan/v11/l7gAbjR61M69yt8Z8w6FZf9WoBxdBrFbvm6O.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/spartan/v12/l7gAbjR61M69yt8Z8w6FZf9WoBxdBrFbvm6O.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Spartan';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/spartan/v11/l7gAbjR61M69yt8Z8w6FZf9WoBxdBrFivm6O.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/spartan/v12/l7gAbjR61M69yt8Z8w6FZf9WoBxdBrFivm6O.ttf) format('truetype');
 }
 * {
   box-sizing: border-box;
@@ -150,6 +150,9 @@ header img {
   background-color: hsl(180, 14%, 20%);
   color: #fff;
 }
+.required-skills .skill-pill {
+  cursor: pointer;
+}
 .filter-bar {
   position: absolute;
   bottom: -25px;
@@ -170,8 +173,25 @@ header img {
   text-decoration: underline;
   cursor: pointer;
 }
+.filter-bar .selected-filters .skill-pill {
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .filter-bar .selected-filters .skill-pill:hover {
   background-color: hsl(180, 52%, 76%);
+}
+.filter-bar .selected-filters .skill-pill .skill {
+  padding: 0.5rem;
+}
+.filter-bar .selected-filters .skill-pill .skill-pill-remove-btn {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 0.5rem;
+  background-color: hsl(180, 29%, 50%);
+  color: #fff;
+  cursor: pointer;
 }
 .filters-mobile {
   display: grid;

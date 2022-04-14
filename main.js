@@ -173,7 +173,7 @@ const addFilters = (skill) => {
     div.innerHTML = 
         `
             <div class="skill">${skill}</div> 
-            <div class="skill-pill-remove-btn">X</div>
+            <div class="skill-pill-remove-btn" onClick="removeSkill()">X</div>
         `;
 
     
@@ -182,9 +182,7 @@ const addFilters = (skill) => {
     !activeFilters.includes(skill) && activeFilters.push(skill);
 };
 
-const removeBtn = document.querySelector('.skill-pill-remove-btn');
-
-removeBtn.addEventListener('click', () => {
+function removeSkill(){
     const target = event.target;
     const skillPill = target.closest('.skill-pill');
     const skill = target.previousElementSibling.innerText;
@@ -196,4 +194,4 @@ removeBtn.addEventListener('click', () => {
     });
 
     skillPill.remove();
-});
+};
