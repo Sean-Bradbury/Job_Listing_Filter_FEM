@@ -19,6 +19,14 @@
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/spartan/v12/l7gAbjR61M69yt8Z8w6FZf9WoBxdBrFivm6O.ttf) format('truetype');
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -173,11 +181,22 @@ header img {
   text-decoration: underline;
   cursor: pointer;
 }
+.filter-bar {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease-in-out;
+}
+.filter-bar.active {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.5s ease-in-out;
+}
 .filter-bar .selected-filters .skill-pill {
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
+  animation: 0.3s fadeIn;
 }
 .filter-bar .selected-filters .skill-pill:hover {
   background-color: hsl(180, 52%, 96%);

@@ -4,10 +4,14 @@ var data = [];
 var tempFilters = [];
 var availableFilters = []; // Selectors
 
-var filtersBtn = document.querySelector(".js-filters-mobile-btn"); // Event Listeners
+var filtersBtn = document.querySelector(".js-filters-mobile-btn");
+var filterClearBtn = document.querySelector('.js-filter-clear-btn'); // Event Listeners
 
 filtersBtn.addEventListener("click", function () {
   return filtersBtnEvent();
+});
+filterClearBtn.addEventListener("click", function () {
+  return clearAllSkills();
 });
 
 var getData = function getData() {
@@ -132,15 +136,22 @@ var initializeSkillBtns = function initializeSkillBtns() {
       return addFilters(skill.innerText);
     });
   });
-};
+}; // Selectors for the filter bar
+
+
+var filterBarContainer = document.querySelector('.filter-bar');
+var selectedFiltersContainer = document.querySelector('.selected-filters');
 
 var addFilters = function addFilters(skill) {
-  var selectedFiltersContainer = document.querySelector('.selected-filters');
   var div = document.createElement('div');
   div.classList.add('skill-pill');
   div.innerHTML = "\n            <div class=\"skill\">".concat(skill, "</div> \n            <img class=\"skill-pill-remove-btn\" onClick=\"removeSkill()\" src=\"/images/icon-remove.svg\" alt=\"cross\" title=\"remove skill\" />\n        ");
   !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
   !activeFilters.includes(skill) && activeFilters.push(skill);
+
+  if (activeFilters.length > 0) {
+    filterBarContainer.classList.add('active');
+  }
 };
 
 function removeSkill() {
@@ -152,7 +163,20 @@ function removeSkill() {
       activeFilters.splice(index, 1);
     }
   });
+
+  if (activeFilters.length === 0) {
+    filterBarContainer.classList.remove('active');
+  }
+
   skillPill.remove();
 }
 
 ;
+
+function clearAllSkills() {
+  var filterPills = document.querySelectorAll('.selected-filters .skill-pill');
+  filterPills.forEach(function (pill) {
+    pill.remove();
+  });
+  filterBarContainer.classList.remove('active');
+}

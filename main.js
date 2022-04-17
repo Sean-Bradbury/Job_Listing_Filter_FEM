@@ -4,10 +4,11 @@ let availableFilters = [];
 
 // Selectors
 const filtersBtn = document.querySelector(".js-filters-mobile-btn");
+const filterClearBtn = document.querySelector('.js-filter-clear-btn');
 
 // Event Listeners
 filtersBtn.addEventListener("click", () => filtersBtnEvent());
-
+filterClearBtn.addEventListener("click", () => clearAllSkills());
 
 const getData =  () => {
     fetch("data.json")
@@ -163,9 +164,11 @@ const initializeSkillBtns = () => {
     });
 };
 
-const addFilters = (skill) => {
-    const selectedFiltersContainer = document.querySelector('.selected-filters');
+// Selectors for the filter bar
+const filterBarContainer = document.querySelector('.filter-bar');
+const selectedFiltersContainer = document.querySelector('.selected-filters');
 
+const addFilters = (skill) => {
     const div = document.createElement('div');
 
     div.classList.add('skill-pill');
@@ -180,6 +183,10 @@ const addFilters = (skill) => {
     !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
 
     !activeFilters.includes(skill) && activeFilters.push(skill);
+
+    if(activeFilters.length > 0){
+        filterBarContainer.classList.add('active');
+    }
 };
 
 function removeSkill(){
@@ -193,5 +200,19 @@ function removeSkill(){
         }
     });
 
+    if(activeFilters.length === 0){
+        filterBarContainer.classList.remove('active');
+    }
+
     skillPill.remove();
 };
+
+function clearAllSkills(){
+    const filterPills = document.querySelectorAll('.selected-filters .skill-pill');
+
+    filterPills.forEach(pill => {
+        pill.remove();
+    });
+
+    filterBarContainer.classList.remove('active');
+}
