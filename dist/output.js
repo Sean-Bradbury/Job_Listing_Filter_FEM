@@ -4,12 +4,8 @@ var data = [];
 var tempFilters = [];
 var availableFilters = []; // Selectors
 
-var filtersBtn = document.querySelector(".js-filters-mobile-btn");
 var filterClearBtn = document.querySelector('.js-filter-clear-btn'); // Event Listeners
 
-filtersBtn.addEventListener("click", function () {
-  return filtersBtnEvent();
-});
 filterClearBtn.addEventListener("click", function () {
   return clearAllSkills();
 });
@@ -55,75 +51,12 @@ var displayJobs = function displayJobs(data) {
         return "<div class=\"skill-pill\">".concat(language, "</div>");
       }).join(''), "\n                </div>\n            </div>\n            ");
       jobsContainer.appendChild(div);
+      initializeSkillBtns();
     });
   } else {
     var div = document.createElement("div");
     div.innerHTML = "\n        <div class=\"heading\">\n            <span>No results found, please adjust filters!</span>\n        </div>\n        ";
     jobsContainer.appendChild(div);
-  }
-};
-
-var filtersBtnEvent = function filtersBtnEvent() {
-  var filtersContainer = document.querySelector('.filters-mobile-container');
-  var target = event.target;
-  target.closest('.js-filters-mobile-btn').classList.add("active");
-
-  if (filtersBtn.classList.contains("active")) {
-    if (!filtersContainer) {
-      var div = document.createElement('div');
-      div.classList.add("filters-mobile-container");
-      div.innerHTML = "\n                <div class=\"filter-mobile-btns\">\n                    ".concat(availableFilters.map(function (filter) {
-        return "<div class=\"skill-pill\">".concat(filter, "</div>");
-      }).join(''), "\n                </div>\n                \n                <div class=\"btn js-apply-filters\">Apply Filters</div>\n                ");
-      filtersBtn.appendChild(div);
-    } else {
-      filtersContainer.style.display = "block";
-    }
-  } else {
-    filtersContainer.style.display = "none";
-  }
-
-  if (target.classList.contains('skill-pill')) {
-    if (!target.classList.contains('active')) {
-      target.classList.add('active');
-    } else {
-      target.classList.remove('active');
-    }
-  }
-
-  if (target.classList.contains('close-btn')) {
-    filtersContainer.style.display = "none";
-    target.closest('.js-filters-mobile-btn').classList.remove("active");
-  }
-
-  if (target.classList.contains('js-apply-filters')) {
-    var _activeFilters = [];
-    var activeSkillPills = document.querySelectorAll('.skill-pill.active');
-    var filteredData = [];
-    activeSkillPills.forEach(function (pill) {
-      _activeFilters.push(pill.innerText);
-    });
-
-    if (_activeFilters.length > 0) {
-      var filterData = function filterData() {
-        data.forEach(function (element) {
-          if (_activeFilters.every(function (language) {
-            return element.languages.includes(language);
-          })) {
-            filteredData.push(element);
-          }
-        });
-      };
-
-      ;
-      filterData();
-      displayJobs(filteredData);
-    } else {
-      displayJobs(data);
-    }
-
-    filtersContainer.style.display = "none";
-    target.closest('.js-filters-mobile-btn').classList.remove("active");
   }
 };
 
@@ -146,13 +79,32 @@ var addFilters = function addFilters(skill) {
   var div = document.createElement('div');
   div.classList.add('skill-pill');
   div.innerHTML = "\n            <div class=\"skill\">".concat(skill, "</div> \n            <img class=\"skill-pill-remove-btn\" onClick=\"removeSkill()\" src=\"/images/icon-remove.svg\" alt=\"cross\" title=\"remove skill\" />\n        ");
-  !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
-  !activeFilters.includes(skill) && activeFilters.push(skill);
+
+  if (!activeFilters.includes(skill)) {
+    activeFilters.push(skill);
+    selectedFiltersContainer.appendChild(div);
+  }
 
   if (activeFilters.length > 0) {
     filterBarContainer.classList.add('active');
   }
+
+  var filteredData = [];
+  filterData(filteredData);
+  displayJobs(filteredData);
 };
+
+function filterData(filteredData) {
+  data.forEach(function (element) {
+    if (activeFilters.every(function (language) {
+      return element.languages.includes(language);
+    })) {
+      filteredData.push(element);
+    }
+  });
+}
+
+;
 
 function removeSkill() {
   var target = event.target;
@@ -168,15 +120,21 @@ function removeSkill() {
     filterBarContainer.classList.remove('active');
   }
 
+  console.log(activeFilters);
   skillPill.remove();
+  var filteredData = [];
+  filterData(filteredData);
+  displayJobs(filteredData);
 }
 
 ;
 
 function clearAllSkills() {
-  var filterPills = document.querySelectorAll('.selected-filters .skill-pill');
-  filterPills.forEach(function (pill) {
-    pill.remove();
+  var filterPillsRemoveBtns = document.querySelectorAll('.selected-filters .skill-pill-remove-btn');
+  filterPillsRemoveBtns.forEach(function (btn) {
+    btn.click();
   });
   filterBarContainer.classList.remove('active');
 }
+
+;

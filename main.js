@@ -3,11 +3,9 @@ const tempFilters = [];
 let availableFilters = [];
 
 // Selectors
-const filtersBtn = document.querySelector(".js-filters-mobile-btn");
 const filterClearBtn = document.querySelector('.js-filter-clear-btn');
 
 // Event Listeners
-filtersBtn.addEventListener("click", () => filtersBtnEvent());
 filterClearBtn.addEventListener("click", () => clearAllSkills());
 
 const getData =  () => {
@@ -69,6 +67,7 @@ const displayJobs = (data) => {
             `;
     
             jobsContainer.appendChild(div);
+            initializeSkillBtns();
         });
     } else {
         const div = document.createElement("div");
@@ -82,76 +81,6 @@ const displayJobs = (data) => {
         jobsContainer.appendChild(div);
     }
 
-};
-
-const filtersBtnEvent = () => {
-    const filtersContainer = document.querySelector('.filters-mobile-container');
-
-    const target = event.target;
-
-    target.closest('.js-filters-mobile-btn').classList.add("active"); 
-
-    if(filtersBtn.classList.contains("active")){
-        if(!filtersContainer){
-            const div = document.createElement('div');
-            div.classList.add("filters-mobile-container");
-    
-            div.innerHTML = `
-                <div class="filter-mobile-btns">
-                    ${availableFilters.map(filter => `<div class="skill-pill">${filter}</div>`).join('')}
-                </div>
-                
-                <div class="btn js-apply-filters">Apply Filters</div>
-                `;
-    
-            filtersBtn.appendChild(div);
-        } else {
-            filtersContainer.style.display = "block";
-        }
-    } else {
-        filtersContainer.style.display = "none";
-    }   
-
-    if(target.classList.contains('skill-pill')){
-        if(!target.classList.contains('active')){
-            target.classList.add('active');
-        } else {
-            target.classList.remove('active');
-        }
-    }
-
-    if(target.classList.contains('close-btn')){
-        filtersContainer.style.display = "none";
-        target.closest('.js-filters-mobile-btn').classList.remove("active");
-    }
-
-    if(target.classList.contains('js-apply-filters')){
-        const activeFilters = [];
-        const activeSkillPills = document.querySelectorAll('.skill-pill.active');
-        const filteredData = [];
-        
-        activeSkillPills.forEach(pill => {
-            activeFilters.push(pill.innerText);
-        });
-
-        if(activeFilters.length > 0){
-            function filterData() { 
-                data.forEach(element => {
-                    if(activeFilters.every(language => element.languages.includes(language))){
-                        filteredData.push(element);
-                    }
-            })};
-    
-            filterData();
-    
-            displayJobs(filteredData);
-        } else {
-            displayJobs(data);
-        }
-
-        filtersContainer.style.display = "none";
-        target.closest('.js-filters-mobile-btn').classList.remove("active");
-    }
 };
 
 const activeFilters = [];
@@ -179,15 +108,28 @@ const addFilters = (skill) => {
             <img class="skill-pill-remove-btn" onClick="removeSkill()" src="/images/icon-remove.svg" alt="cross" title="remove skill" />
         `;
 
-    
-    !activeFilters.includes(skill) && selectedFiltersContainer.appendChild(div);
+    if(!activeFilters.includes(skill)) {
+        activeFilters.push(skill);
 
-    !activeFilters.includes(skill) && activeFilters.push(skill);
+        selectedFiltersContainer.appendChild(div);
+    } 
 
     if(activeFilters.length > 0){
         filterBarContainer.classList.add('active');
     }
+    const filteredData = [];
+
+    filterData(filteredData);
+    
+    displayJobs(filteredData);
 };
+
+function filterData(filteredData) { 
+    data.forEach(element => {
+        if(activeFilters.every(language => element.languages.includes(language))){
+            filteredData.push(element);
+        }
+})};
 
 function removeSkill(){
     const target = event.target;
@@ -204,15 +146,23 @@ function removeSkill(){
         filterBarContainer.classList.remove('active');
     }
 
+    console.log(activeFilters);
+
     skillPill.remove();
+
+    const filteredData = [];
+
+    filterData(filteredData);
+    
+    displayJobs(filteredData);
 };
 
 function clearAllSkills(){
-    const filterPills = document.querySelectorAll('.selected-filters .skill-pill');
+    const filterPillsRemoveBtns = document.querySelectorAll('.selected-filters .skill-pill-remove-btn');
 
-    filterPills.forEach(pill => {
-        pill.remove();
+    filterPillsRemoveBtns.forEach(btn => {
+        btn.click();
     });
 
     filterBarContainer.classList.remove('active');
-}
+};
